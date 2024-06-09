@@ -1,0 +1,17 @@
+{
+    "name": "martintraverso/cotizacionesbcu",
+    "description": "Tomar cotizaciones desde el Banco Central del Uruguay",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Martintraverso\\Cotizacionesbcu\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Martin Traverso",
+            "email": "martin@traverso.com.uy"
+        }
+    ],
+    "require": {}
+}
