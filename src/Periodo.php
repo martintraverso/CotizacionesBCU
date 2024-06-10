@@ -3,14 +3,14 @@ namespace Martintraverso\Cotizacionesbcu;
 
 class Periodo
 {
-	public function __construct(private \DateTimeInmutable $start, private \DateTimeInmutable $end){}
+	public function __construct(private \DateTimeImmutable $start, private \DateTimeImmutable $end){}
 	
-	public function getStart(): \DateTimeInmutable
+	public function getStart(): \DateTimeImmutable
 	{
 		return $this->start;
 	}
 
-	public function getEnd(): \DateTimeInmutable
+	public function getEnd(): \DateTimeImmutable
 	{
 		return $this->end;
 	}

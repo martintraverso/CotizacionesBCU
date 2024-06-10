@@ -26,7 +26,7 @@ class CotizacionesBCU
 		return $cotizaciones;
 	}
 
-	private function getAPi(Periodo $periodo): void
+	private function getAPi(Periodo $periodo): mixed
 	{
 		$curl = curl_init();
 		curl_setopt_array($curl, array(
