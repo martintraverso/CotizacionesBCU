@@ -8,7 +8,6 @@ use Psr\Cache\CacheItemPoolInterface;
 
 class CotizacionesBCU
 {
-	public function __construct(private CacheItemPoolInterface $cache){}
 
 	public function get(Moneda $moneda, Periodo $periodo) : Cotizaciones
 	{
@@ -19,16 +18,11 @@ class CotizacionesBCU
 	{
 		$cotizaciones = new Cotizaciones();
 		$current = $periodo->getStart();	
-		while($current < $periodo->getEnd()) {
-			$cacheitem= $current->format('Y-m-d') . $moneda->nombre . 'venta';
-
-			if (!$this->cache->hasItem($cacheitem)) {
-				$this->getApi(new Periodo($current, $current));
-			}
-	
-			$cotizaciones->add($this->cache->getItem($cacheitem));
-			$current = $current->sum('+1 day');
-		}		
+		$response = $this->getApi($periodo->getStart(), $periodo->getEnd());
+		foreach ($response['cotizacionesoutlist']['Cotizaciones'] as $cotizacion) {
+			$fecha = new \DateTimeInmutable(str_replace(')', '', str_replace('\/Date(' , '', $cotizacion['Fecha'])));
+			$cotizaciones->add(Cotizacion::fromResponse($cotizacion));
+		}
 		return $cotizaciones;
 	}
 
@@ -50,14 +44,6 @@ class CotizacionesBCU
 
 			$response = json_decode(curl_exec($curl), TRUE);
 			curl_close($curl);
-			foreach ($response['cotizacionesoutlist']['Cotizaciones'] as $cotizacion) {
-				$fecha = new \DateTimeInmutable(str_replace(')', '', str_replace('\/Date(' , '', $cotizacion['Fecha'])));
-				$item = $this->cache->getItem($fecha->format('Y-m-d') . $cotizacion['CodigoISO'] . 'venta');
-				$item->set($cotizacion['TCV']);
-				$item2 = $this->cache->getItem($fecha->format('Y-m-d') . $cotizacion['CodigoISO'] . 'compra');
-				$item2->set($cotizacion['TCC']);
-				$this->cache->save($item);
-				$this->cache->save($item2);
-			}
+			return $response;	
 	}
 }
