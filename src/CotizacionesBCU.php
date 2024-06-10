@@ -4,23 +4,15 @@ namespace Martintraverso\Cotizacionesbcu;
 use Martintraverso\Cotizacionesbcu\Moneda;
 use Martintraverso\Cotizacionesbcu\Periodo;
 use Martintraverso\Cotizacionesbcu\Cotizaciones;
-use Psr\Cache\CacheItemPoolInterface;
 
 class CotizacionesBCU
 {
 
-	public function get(Moneda $moneda, Periodo $periodo) : Cotizaciones
-	{
-		return $this->build($moneda, $periodo);
-	}
-
-	private function build(Moneda $moneda, Periodo $periodo): Cotizaciones
+	public function get(Periodo $periodo) : Cotizaciones
 	{
 		$cotizaciones = new Cotizaciones();
-		$current = $periodo->getStart();	
-		$response = $this->getApi($periodo->getStart(), $periodo->getEnd());
+		$response = $this->getApi($periodo);
 		foreach ($response['cotizacionesoutlist']['Cotizaciones'] as $cotizacion) {
-			$fecha = new \DateTimeInmutable(str_replace(')', '', str_replace('\/Date(' , '', $cotizacion['Fecha'])));
 			$cotizaciones->add(Cotizacion::fromResponse($cotizacion));
 		}
 		return $cotizaciones;
