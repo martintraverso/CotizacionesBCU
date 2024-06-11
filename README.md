@@ -1,7 +1,15 @@
 # CotizacionesBCU
-Cotizaciones del Banco Central del Uruguay
+Little package to get exchanges from Central Uruguayan Bank. 
+Pequeño paquete para obtener las cotizaciones del Banco Central del Uruguay.
 
-WORK IN PROGRESS
-NI LO MIREN ESTO TODAVIA NO FUNCIONA. 
+WORK IN PROGRESS - TRABAJO QUE DA VERGUENZA
 
-Me di cuenta que el BCU tiene un sistema abierto para consultar las cotizaciones. Estaba aburrido y comencé a hacerlo. Quizá lo termine en algún momento. 
+```php
+use Martintraverso\Cotizacionesbcu\Periodo;
+use Martintraverso\Cotizacionesbcu\CotizacionesBCU;
+
+$periodo = new Periodo(new DateTimeImmutable(), new DateTimeImmutable);
+$cotizaciones = new CotizacionesBCU();
+$cotizaciones->get($periodo);
+```
+
