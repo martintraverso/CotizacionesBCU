@@ -4,6 +4,7 @@ namespace Martintraverso\Cotizacionesbcu;
 use Martintraverso\Cotizacionesbcu\Moneda;
 use Martintraverso\Cotizacionesbcu\Periodo;
 use Martintraverso\Cotizacionesbcu\Cotizaciones;
+use Martintraverso\Cotizacionesbcu\Cotizacion;
 
 class CotizacionesBCU
 {

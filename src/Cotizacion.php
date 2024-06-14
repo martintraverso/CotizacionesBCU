@@ -9,6 +9,15 @@ class Cotizacion
 	private $moneda;
 	private $arbitraje;
 
+	public function __construct(array $data)
+	{
+		$this->setVenta($data['TCV']);
+		$this->setCompra($data['TCC']);
+		$this->setMoneda($data['CodigoISO']);
+		$this->setArbitraje($data['ArbAct']);
+
+	}
+
 	public function setCompra($compra)
 	{
 		$this->compra = $compra;
@@ -54,11 +63,6 @@ class Cotizacion
 
 	public static function fromResponse(mixed $data): self
 	{
-		$class = new Cotizacion();	
-		$class->setVenta($data['TCV'])
-			->setCompra($data['TCC'])
-			->setMoneda($data['CodigoISO'])
-			->setArbitraje($data['ArbAct']);
-		return $class;
+		return new self($data);	
 	}
 }
