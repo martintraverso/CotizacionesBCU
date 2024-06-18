@@ -8,7 +8,7 @@ WORK IN PROGRESS - TRABAJO QUE DA VERGUENZA
 use Martintraverso\Cotizacionesbcu\Periodo;
 use Martintraverso\Cotizacionesbcu\CotizacionesBCU;
 
-$periodo = new Periodo(new DateTimeImmutable(), new DateTimeImmutable);
+$periodo = new Periodo(new DateTimeImmutable(), new DateTimeImmutable());
 $cotizaciones = new CotizacionesBCU();
 $cotizaciones->get($periodo);
 ```
